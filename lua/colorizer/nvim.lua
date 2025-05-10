@@ -52,7 +52,7 @@ local window_options = {
 -- TODO `nvim.ex.$command(...)` is approximately `:$command {...}.join(" ")`
 -- `nvim.print(...)` is approximately `echo vim.inspect(...)`
 -- `nvim.echo(...)` is approximately `echo table.concat({...}, '\n')`
--- Both methods cache the inital lookup in the metatable, but there is a small overhead regardless.
+-- Both methods cache the initial lookup in the metatable, but there is a small overhead regardless.
 return setmetatable({
 	print = nvim_print;
 	echo = nvim_echo;
@@ -148,28 +148,28 @@ return setmetatable({
 	});
 	o = setmetatable({}, {
 		__index = function(_, k)
-			return vim.api.nvim_get_option(k)
+			return utils.get_option(k)
 		end;
 		__newindex = function(_, k, v)
-			return vim.api.nvim_set_option(k, v)
+			return utils.set_option(k, v)
 		end
 	});
 	-- TODO add warning if you try to use a window option here?
 	bo = setmetatable({}, {
 		__index = function(_, k)
-			return vim.api.nvim_buf_get_option(0, k)
+			return utils.buf_get_option(0, k)
 		end;
 		__newindex = function(_, k, v)
-			return vim.api.nvim_buf_set_option(0, k, v)
+			return utils.buf_set_option(0, k, v)
 		end
 	});
 	wo = setmetatable({}, {
 		__index = function(_, k)
-			return vim.api.nvim_win_get_option(0, k)
+			return utils.win_get_option(0, k)
 		end;
 		__newindex = function(_, k, v)
 			-- passing v == nil will clear the value, just like above.
-			return vim.api.nvim_win_set_option(0, k, v)
+			return utils.win_set_option(0, k, v)
 		end
 	});
 	env = setmetatable({}, {
