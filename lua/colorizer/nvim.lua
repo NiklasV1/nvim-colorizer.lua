@@ -1,25 +1,28 @@
 --- Module of magic functions for nvim
 -- @module nvim
 
+-- Import version independent wrapper functions of deprecated api functions
+local utils = require("colorizer.utils")
+
 -- Equivalent to `echo vim.inspect(...)`
 local function nvim_print(...)
 	if select("#", ...) == 1 then
-		vim.api.nvim_out_write(vim.inspect((...)))
+		utils.out_write(vim.inspect((...)))
 	else
-		vim.api.nvim_out_write(vim.inspect {...})
+		utils.out_write(vim.inspect {...})
 	end
-	vim.api.nvim_out_write("\n")
+	utils.out_write("\n")
 end
 
 --- Equivalent to `echo` EX command
 local function nvim_echo(...)
 	for i = 1, select("#", ...) do
 		local part = select(i, ...)
-		vim.api.nvim_out_write(tostring(part))
+		utils.out_write(tostring(part))
 		-- vim.api.nvim_out_write("\n")
-		vim.api.nvim_out_write(" ")
+		utils.out_write(" ")
 	end
-	vim.api.nvim_out_write("\n")
+	utils.out_write("\n")
 end
 
 local window_options = {
